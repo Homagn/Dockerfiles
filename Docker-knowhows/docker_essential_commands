@@ -1,0 +1,24 @@
+(removing all unused containers)
+
+docker system prune -a
+
+
+(removing error dangling images due to failed docker builds)
+sudo docker images | grep none | awk '{ print $3; }' | xargs sudo docker rmi -f
+
+
+(removing specific image)
+sudo docker image rm wav:1.0 -f
+
+
+(removing unused containers)
+sudo docker container prune
+
+(check if cleared all containers space)
+sudo docker ps -a
+
+
+(publishing docker images )
+https://ropenscilabs.github.io/r-docker-tutorial/04-Dockerhub.html
+
+

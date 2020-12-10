@@ -1,0 +1,19 @@
+(ref-> https://www.hpc.iastate.edu/guides/containers)
+=========================================
+(Getting started- log into a session and allocate a gpu to yourself)
+salloc -N1 -n 16 --gres=gpu:3 -t400:00:00
+
+(to build a singularity container from docker published images)
+module purge
+module load singularity
+export XDG_RUNTIME_DIR=$pwd
+unset $XDG_RUNTIME_DIR
+export TMPDIR=$(pwd)
+export SINGULARITY_CACHEDIR=$TMPDIR 
+export SINGULARITY_TMPDIR=$TMPDIR
+
+singularity pull docker://homagni/waveglow_apex:2
+
+(to run your built .sif file )
+(assuming you have a host folder /data/Homagni/waveglow and you want to share that to the /waveglow folder in the singularity container)
+singularity run --nv -c -B /data/Homagni/waveglow:/waveglow waveglow_apex_2.sif

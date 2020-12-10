@@ -1,0 +1,54 @@
+https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/user-guide.html
+
+(setting up docker)
+curl https://get.docker.com | sh \
+&& sudo systemctl start docker \
+&& sudo systemctl enable docker
+
+(setting up NVIDIA Container Toolkit)
+
+ distribution=$(. /etc/os-release;echo $ID$VERSION_ID) \
+   && curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add - \
+   && curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list
+
+curl -s -L https://nvidia.github.io/nvidia-container-runtime/experimental/$distribution/nvidia-container-runtime.list | sudo tee /etc/apt/sources.list.d/nvidia-container-runtime.list
+
+sudo apt-get update
+
+sudo apt-get install -y nvidia-docker2
+
+sudo systemctl restart docker
+
+
+(testing- if doesnt work with 11.0 change it to 10.0)
+sudo docker run --rm --gpus all nvidia/cuda:11.0-base nvidia-smi
+
+
+(In order to access cuda during docker build -eg some pesky libraries like apex need gpu access during installation)
+-https://stackoverflow.com/questions/59691207/docker-build-with-nvidia-runtime
+
+Steps for Ubuntu:
+
+Install nvidia-container-runtime:
+
+sudo apt-get install nvidia-container-runtime
+
+Edit/create the /etc/docker/daemon.json with content:
+
+{
+    "runtimes": {
+        "nvidia": {
+            "path": "/usr/bin/nvidia-container-runtime",
+            "runtimeArgs": []
+         } 
+    },
+    "default-runtime": "nvidia" 
+}
+Restart docker daemon:
+
+sudo systemctl restart docker
+
+Build your image (now GPU available during build):
+
+docker build -t my_image_name:latest .
+
