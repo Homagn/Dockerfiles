@@ -21,4 +21,9 @@ sudo docker ps -a
 (publishing docker images )
 https://ropenscilabs.github.io/r-docker-tutorial/04-Dockerhub.html
 
+(building docker images- first go to the folder containing dockerfile)
+docker build -t <name>:<tag> .
+OR
+docker build -t <name> .
+
 
