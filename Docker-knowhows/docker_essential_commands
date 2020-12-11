@@ -21,9 +21,16 @@ sudo docker ps -a
 (publishing docker images )
 https://ropenscilabs.github.io/r-docker-tutorial/04-Dockerhub.html
 
+
 (building docker images- first go to the folder containing dockerfile)
 docker build -t <name>:<tag> .
 OR
 docker build -t <name> .
+
+
+
+(docker communicating to outisde robots)
+https://answers.ros.org/question/303171/connection-between-ros-in-docker-with-external-ros-master-another-pc-the-baxter-case/
+sudo docker run --rm --network=host <your docker hub>/<your image name>:<your tag>
 
 
