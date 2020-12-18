@@ -138,7 +138,8 @@ RUN sudo apt-get install -y --allow-unauthenticated ros-kinetic-librealsense ros
 #https://stackoverflow.com/questions/56931649/docker-cannot-connect-to-x-server
 #sudo nvidia-docker run --rm -ti --net=host --ipc=host -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --env="QT_X11_NO_MITSHM=1" <image_name> <arguments>
 
-#(testing turtlebot)
+#(EXECUTING turtlebot platform)
+
 #spawn a new docker container
 #sudo nvidia-docker run --rm -ti --net=host --ipc=host -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --env="QT_X11_NO_MITSHM=1" scslab-robots
 #(inside that container)
@@ -153,4 +154,28 @@ RUN sudo apt-get install -y --allow-unauthenticated ros-kinetic-librealsense ros
 #cd ~/ros_ws
 #source /opt/ros/kinetic/setup.bash
 #roslaunch turtlebot_gazebo turtlebot_world.launch
-#(takes some time to load but should work !)
+(takes some time to load but should work !)
+
+
+#(EXECUTING sawyer platform)
+#spawn a new docker container
+#sudo nvidia-docker run --rm -ti --net=host --ipc=host -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --env="QT_X11_NO_MITSHM=1" scslab-robots
+#(inside that container)
+#cp ~/ros_ws/src/intera_sdk/intera.sh ~/ros_ws
+#apt-get install gedit
+#cd ~/ros_ws
+#gedit intera.sh
+#(an external notepad type screen will pop up you need to change 3 main things)
+#your_ip="192.168.XXX.XXX" (change this to the ipvalue you get when you do ifconfig on the host machine)
+#change robot_hostname.local to sawyer.local
+#change ros_version="indigo" to ros_version="kinetic"
+#(finally press ctrl+s to save and close the pop up window)
+
+
+#(check if simulation of sawyer runs )
+
+#cd ~/ros_ws
+#source /opt/ros/kinetic/setup.bash
+#./intera.sh sim 
+#roslaunch sawyer_gazebo sawyer_world.launch electric_gripper:=true
+#(a gazebo simulation should appear containing the robot !)
