@@ -1,3 +1,5 @@
 (All my public published images)
 
 singularity pull docker://homagni/waveglow_apex:2
+
+singularity pull docker://homagni/scslab-robots:latest
