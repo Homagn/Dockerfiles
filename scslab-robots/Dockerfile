@@ -154,7 +154,7 @@ RUN sudo apt-get install -y --allow-unauthenticated ros-kinetic-librealsense ros
 #cd ~/ros_ws
 #source /opt/ros/kinetic/setup.bash
 #roslaunch turtlebot_gazebo turtlebot_world.launch
-(takes some time to load but should work !)
+#(takes some time to load but should work !)
 
 
 #(EXECUTING sawyer platform)
