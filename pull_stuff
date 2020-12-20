@@ -3,3 +3,5 @@
 singularity pull docker://homagni/waveglow_apex:2
 
 singularity pull docker://homagni/scslab-robots:latest
+
+singularity pull docker://homagni/vision_language:latest
