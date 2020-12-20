@@ -1,0 +1,99 @@
+(website-> https://github.com/peteanderson80/Matterport3DSimulator)
+
+1. # Make sure to clone with --recursive
+git clone --recursive https://github.com/peteanderson80/Matterport3DSimulator.git
+cd Matterport3DSimulator
+
+2. Download dataset and processing 
+(Latest dataset download has been done on Nov 2020 and is saved in /home/Projects/Datasets/matterport_scan/download/v1/scans/)
+(download_mp.py file is present in /home/Projects/Datasets/matterport_scan/)
+(However if new computer and need to download the data again)
+
+python download_mp.py -o download --id ALL --task_data semantic_voxel_label_data semantic_voxel_label_models
+
+(data would be downloaded in the /home/Projects/datasets/matterport_scan/download/ folder)
+(go inside each of the /home/Projects/Datasets/matterport_scan/download/v1/scans/1LXtFkjw3qL...
+and so on folders and unzip each zipped file)
+(Its very tedious, so I have created the python file-> zip_extraction.py)
+(simply run zip_extraction.py and it will create the extracted folders in the same dir as the code)
+(Now grab all those folders and put them inside the folder unzipped_scans/)
+
+
+3. export the dataset directory for the simulator:
+
+export MATTERPORT_DATA_DIR="/home/homagni/Projects/datasets/matterport_scan/unzipped_scans/"
+
+
+4. (Dont go to dataset processing right away, first setup nvidia-docker for the docker file present in their downloaded github folder)
+
+cd /home/Matterport3DSimulator
+
+(creating the docker image from the docker file)
+
+docker build -t mattersim:9.2-devel-ubuntu18.04 .
+
+(creating a container from the image)
+
+sudo nvidia-docker run -it --mount type=bind,source=$MATTERPORT_DATA_DIR,target=/root/mount/Matterport3DSimulator/data/v1/scans,readonly --volume `pwd`:/root/mount/Matterport3DSimulator mattersim:9.2-devel-ubuntu18.04
+
+
+
+cd /root/mount/Matterport3DSimulator
+mkdir build && cd build
+cmake -DEGL_RENDERING=ON ..
+make
+cd ../
+
+(I think what happens is now the Matterport repository is maked for you from inside the docker container
+to check you can go to home/Matterport3DSimulator/ and see that now a directory called build will exist)
+
+(type exit and exit from the container)
+
+
+
+5. (spawn a new container from the created mattersim image again but this time remove the readonly option)
+(can remove unused containers by typing sudo nvidia-docker ps -a , lookup the name and then type sudo nvidia-docker rm <name>)
+
+
+(data preprocessing)
+export MATTERPORT_DATA_DIR="/home/homagni/Projects/datasets/matterport_scan/unzipped_scans/"
+
+sudo nvidia-docker run -it --mount type=bind,source=$MATTERPORT_DATA_DIR,target=/root/mount/Matterport3DSimulator/data/v1/scans --volume `pwd`:/root/mount/Matterport3DSimulator mattersim:9.2-devel-ubuntu18.04
+
+(once inside the docker container instance)
+cd /root/mount/Matterport3DSimulator
+(for rgb)
+./scripts/downsize_skybox.py
+(for depth- this might end up with a couple of errors but thats fine)
+./scripts/depth_to_skybox.py
+
+
+
+6. (Finally test successful build)
+
+(inside docker container)
+cd /root/mount/Matterport3DSimulator
+./build/tests ~Timing
+
+(Expected output - 
+===============================================================================
+All tests passed (119213 assertions in 5 test cases)
+Also /home/Matterport3DSimulator/sim_imgs/ folder would store some images now)
+
+
+7. (Interactive demo)
+xhost +
+
+sudo nvidia-docker run -it -e DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --mount type=bind,source=$MATTERPORT_DATA_DIR,target=/root/mount/Matterport3DSimulator/data/v1/scans,readonly --volume `pwd`:/root/mount/Matterport3DSimulator mattersim:9.2-devel-ubuntu18.04
+
+OR ABOVE DOESNT WORK? THEN DO THIS BELOW :
+
+sudo nvidia-docker run -it -e DISPLAY -e="QT_X11_NO_MITSHM=1" -v /tmp/.X11-unix:/tmp/.X11-unix --mount type=bind,source=$MATTERPORT_DATA_DIR,target=/root/mount/Matterport3DSimulator/data/v1/scans,readonly --volume `pwd`:/root/mount/Matterport3DSimulator mattersim:9.2-devel-ubuntu18.04
+
+cd /root/mount/Matterport3DSimulator
+
+python3 src/driver/driver.py
+
+
+
+
