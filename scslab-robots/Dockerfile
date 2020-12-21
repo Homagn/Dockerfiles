@@ -129,7 +129,10 @@ RUN apt-mark hold ros-kinetic-librealsense
 
 RUN sudo apt-get install -y --allow-unauthenticated ros-kinetic-librealsense ros-kinetic-turtlebot ros-kinetic-turtlebot-apps ros-kinetic-turtlebot-interactions ros-kinetic-turtlebot-simulator ros-kinetic-ar-track-alvar-msgs 
 
-
+#(install some easy text editor)
+RUN apt-get install -y gedit
+#(add a simple camera platform for the sawyer robot, you can load it later when you call gazebo from inside the container)
+ADD camera_platform /root/.gazebo/models/camera_platform
 
 
 
@@ -162,7 +165,6 @@ RUN sudo apt-get install -y --allow-unauthenticated ros-kinetic-librealsense ros
 #sudo nvidia-docker run --rm -ti --net=host --ipc=host -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --env="QT_X11_NO_MITSHM=1" scslab-robots
 #(inside that container)
 #cp ~/ros_ws/src/intera_sdk/intera.sh ~/ros_ws
-#apt-get install gedit
 #cd ~/ros_ws
 #gedit intera.sh
 #(an external notepad type screen will pop up you need to change 3 main things)

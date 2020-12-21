@@ -1,0 +1,323 @@
+<?xml version="1.0" ?>
+<sdf version="1.5">
+  <model name="manipulation_platform">
+    <link name="table">
+      <pose>0.25 2.25 0 0 0 0</pose>
+      <collision name="surface">
+        <pose>0 0 0.755 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.913 0.913 0.04</size>
+          </box>
+        </geometry>
+      </collision>
+
+      <collision name="column">
+        <pose>0 0 0.37 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.042 0.042 0.74</size>
+          </box>
+        </geometry>
+      </collision>
+
+      <collision name="base">
+        <pose>0 0 0.02 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.56 0.56 0.04</size>
+          </box>
+        </geometry>
+      </collision>
+
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://cafe_table/meshes/cafe_table.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <link name="base">
+      <inertial>
+        <mass>100</mass>
+      </inertial>
+      <visual name="vis_plate_on_ground">
+        <pose>0 0 0.01 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.8</radius>
+            <length>0.02</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Grey</name>
+          </script>
+        </material>
+      </visual>
+      <visual name="vis_pole">
+        <pose>-0.275 0 1.1 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.2 0.2 2.2</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Grey</name>
+          </script>
+        </material>
+      </visual>
+      <collision name="col_plate_on_ground">
+        <pose>0 0 0.01 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.8</radius>
+            <length>0.02</length>
+          </cylinder>
+        </geometry>
+      </collision>
+      <collision name="col_pole">
+        <pose>-0.275 0 1.1 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.2 0.2 2.2</size>
+          </box>
+        </geometry>
+      </collision>
+    </link>
+    <!-- upper link, length 1, IC -90 degrees -->
+    <link name="upper_link">
+      <pose>0 0 2.1 -1.5708 0 0</pose>
+      <self_collide>0</self_collide>
+      <inertial>
+        <pose>0 0 0.5 0 0 0</pose>
+      </inertial>
+      <visual name="vis_upper_joint">
+        <pose>-0.05 0 0 0 1.5708 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.1</radius>
+            <length>0.3</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Grey</name>
+          </script>
+        </material>
+      </visual>
+      <visual name="vis_lower_joint">
+        <pose>0 0 1.0 0 1.5708 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.1</radius>
+            <length>0.2</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Grey</name>
+          </script>
+        </material>
+      </visual>
+      <visual name="vis_cylinder">
+        <pose>0 0 0.5 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.1</radius>
+            <length>0.9</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Grey</name>
+          </script>
+        </material>
+      </visual>
+      <collision name="col_upper_joint">
+        <pose>-0.05 0 0 0 1.5708 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.1</radius>
+            <length>0.3</length>
+          </cylinder>
+        </geometry>
+      </collision>
+      <collision name="col_lower_joint">
+        <pose>0 0 1.0 0 1.5708 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.1</radius>
+            <length>0.2</length>
+          </cylinder>
+        </geometry>
+      </collision>
+      <collision name="col_cylinder">
+        <pose>0 0 0.5 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.1</radius>
+            <length>0.9</length>
+          </cylinder>
+        </geometry>
+      </collision>
+    </link>
+    <!-- lower link, length 1, IC ~-120 degrees more -->
+    <link name="lower_link">
+      <pose>0.25 1.0 2.1 -2 0 0</pose>
+      <self_collide>0</self_collide>
+      <inertial>
+        <pose>0 0 0.5 0 0 0</pose>
+      </inertial>
+      <visual name="vis_lower_joint">
+        <pose>0 0 0 0 1.5708 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.08</radius>
+            <length>0.3</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Grey</name>
+          </script>
+        </material>
+      </visual>
+      <visual name="vis_cylinder">
+        <pose>0 0 0.5 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.1</radius>
+            <length>0.9</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Grey</name>
+          </script>
+        </material>
+      </visual>
+      <collision name="col_lower_joint">
+        <pose>0 0 0 0 1.5708 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.08</radius>
+            <length>0.3</length>
+          </cylinder>
+        </geometry>
+      </collision>
+      <collision name="col_cylinder">
+        <pose>0 0 0.5 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.1</radius>
+            <length>0.9</length>
+          </cylinder>
+        </geometry>
+      </collision>
+    </link>
+    <link name="cambox">
+      <pose>0.25 1.9 1.65 0.0 0.5 1.57</pose>
+      <inertial>
+        <mass>0.1</mass>
+        <inertia>
+          <ixx>0.0</ixx>
+          <iyy>0.0</iyy>
+          <izz>0.0</izz>
+        </inertia>
+      </inertial>
+      <collision name="collision">
+        <geometry>
+          <box>
+            <size>0.1 0.1 0.1</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <box>
+            <size>0.1 0.1 0.1</size>
+          </box>
+        </geometry>
+      </visual>
+      <sensor name="camera" type="camera">
+        <camera>
+          <horizontal_fov>1.047</horizontal_fov>
+          <image>
+            <width>320</width>
+            <height>240</height>
+          </image>
+          <clip>
+            <near>0.1</near>
+            <far>100</far>
+          </clip>
+          <distortion>
+            <k1>-0.25</k1>
+            <k2>0.12</k2>
+            <k3>0.0</k3>
+            <p1>-0.00028</p1>
+            <p2>-0.00005</p2>
+            <center>0.5 0.5</center>
+          </distortion>
+        </camera>
+        <always_on>1</always_on>
+        <update_rate>30</update_rate>
+        <visualize>true</visualize>
+      </sensor>
+    </link>
+    <joint name="upper_joint" type="revolute">
+      <parent>base</parent>
+      <child>upper_link</child>
+      <axis>
+        <xyz>1.0 0 0</xyz>
+        <use_parent_model_frame>0</use_parent_model_frame>
+        <limit>
+          <lower>-0.1</lower>
+          <upper>1.5</upper>
+          <effort>0.1</effort>
+          <velocity>1000</velocity>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+          <damping>0</damping>
+          <friction>0</friction>
+        </dynamics>
+      </axis>
+    </joint>
+    <!-- pin joint for lower link, at origin of child link -->
+    <joint name="lower_joint" type="revolute">
+      <parent>upper_link</parent>
+      <child>lower_link</child>
+      <axis>
+        <xyz>1.0 0 0</xyz>
+        <use_parent_model_frame>0</use_parent_model_frame>
+        <limit>
+          <lower>-0.2</lower>
+          <upper>1.5</upper>
+          <effort>0.1</effort>
+          <velocity>1000</velocity>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+          <damping>0</damping>
+          <friction>0</friction>
+        </dynamics>
+      </axis>
+    </joint>
+    <joint name="camera_joint" type="fixed">
+      <parent>lower_link</parent>
+      <child>cambox</child>
+    </joint>
+  </model>
+</sdf>
