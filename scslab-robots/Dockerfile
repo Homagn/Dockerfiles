@@ -129,11 +129,22 @@ RUN apt-mark hold ros-kinetic-librealsense
 
 RUN sudo apt-get install -y --allow-unauthenticated ros-kinetic-librealsense ros-kinetic-turtlebot ros-kinetic-turtlebot-apps ros-kinetic-turtlebot-interactions ros-kinetic-turtlebot-simulator ros-kinetic-ar-track-alvar-msgs 
 
+
+#(miscellaneous installs)
+#===========================================================================
 #(install some easy text editor)
 RUN apt-get install -y gedit
-#(add a simple camera platform for the sawyer robot, you can load it later when you call gazebo from inside the container)
-ADD camera_platform /root/.gazebo/models/camera_platform
+#(a good library for fast pointcloud processing)
+RUN sudo apt-get install ros-kinetic-ros-numpy
 
+#(add a simple camera platform for the sawyer robot, you can load it later when you call gazebo from inside the container)
+ADD assets/camera_platform /root/.gazebo/models/camera_platform
+ADD scripts/intera.sh /root/ros_ws/intera.sh
+RUN ["chmod", "+x", "/root/ros_ws/intera.sh"]
+
+#ADD scripts/ros_entrypoint.sh /root/ros_ws/ros_entrypoint.sh
+#RUN ["chmod", "+x", "/root/ros_ws/ros_entrypoint.sh"]
+#CMD ["./root/ros_ws/ros_entrypoint.sh"]
 
 
 #===========================================================================
@@ -162,8 +173,11 @@ ADD camera_platform /root/.gazebo/models/camera_platform
 
 #(EXECUTING sawyer platform)
 #spawn a new docker container
-#sudo nvidia-docker run --rm -ti --net=host --ipc=host -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --env="QT_X11_NO_MITSHM=1" scslab-robots
-#(inside that container)
+#(assuming some code need to mount in /home/homagni/sawyer/)
+
+#sudo nvidia-docker run --rm -ti --mount type=bind,source=/home/homagni/sawyer/,target=/sawyer --net=host --ipc=host -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --env="QT_X11_NO_MITSHM=1" scslab-robots
+
+#(inside that container- no need to do anymore added new commands)
 #cp ~/ros_ws/src/intera_sdk/intera.sh ~/ros_ws
 #cd ~/ros_ws
 #gedit intera.sh
@@ -175,7 +189,6 @@ ADD camera_platform /root/.gazebo/models/camera_platform
 
 
 #(check if simulation of sawyer runs )
-
 #cd ~/ros_ws
 #source /opt/ros/kinetic/setup.bash
 #./intera.sh sim 
