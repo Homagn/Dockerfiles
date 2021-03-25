@@ -38,3 +38,8 @@ https://answers.ros.org/question/303171/connection-between-ros-in-docker-with-ex
 sudo docker run --rm --network=host <your docker hub>/<your image name>:<your tag>
 
 
+(saving and loading docker images)
+docker save -> https://docs.docker.com/engine/reference/commandline/save/
+docker load ->https://docs.docker.com/engine/reference/commandline/load/
+
+
