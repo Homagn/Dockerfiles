@@ -2,6 +2,10 @@
 
 docker system prune -a
 
+(kill all current docker processes containers)
+
+docker kill $(docker ps -q)
+
 (checking current docker images in the system)
 
 nvidia-docker images
