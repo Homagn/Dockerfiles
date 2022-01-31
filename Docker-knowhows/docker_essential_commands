@@ -1,6 +1,9 @@
-(removing all unused containers)
+(removing all container images)
 
 docker system prune -a
+
+(remove exited containers and not their images to clear space)
+sudo docker rm $(sudo docker ps -qa --no-trunc --filter "status=exited")
 
 (kill all current docker processes containers)
 
