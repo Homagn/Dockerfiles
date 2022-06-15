@@ -31,6 +31,16 @@ sudo docker ps -a
 
 (publishing docker images )
 https://ropenscilabs.github.io/r-docker-tutorial/04-Dockerhub.html
+brief--
+docker login --username=yourhubusername
+(check the tag for the image you want to push and copy the tag id)
+docker images
+(now tag the image you want to push.. example below)
+docker tag bb38976d03cf yourhubusername/verse_gapminder:firsttry
+(push the image.. example below)
+docker push yourhubusername/verse_gapminder
+
+
 
 
 (building docker images- first go to the folder containing dockerfile)
