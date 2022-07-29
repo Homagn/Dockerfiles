@@ -1,3 +1,8 @@
+(host linux system hold and unhold kernel updates)
+from- https://connectwww.com/how-to-prevent-ubuntu-kernel-update-disable-or-stop-linux-kernel-update/62052/
+sudo apt-mark hold linux-image-generic linux-headers-generic
+sudo apt-mark unhold linux-image-generic linux-headers-generic
+
 (removing all container images)
 
 docker system prune -a
