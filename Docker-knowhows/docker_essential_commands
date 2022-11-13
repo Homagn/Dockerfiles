@@ -65,3 +65,14 @@ docker save -> https://docs.docker.com/engine/reference/commandline/save/
 docker load ->https://docs.docker.com/engine/reference/commandline/load/
 
 
+(commit current docker container changes to docker image)
+first we need to get the id of the container running using
+sudo docker ps -a
+(ex- 3636f4c40fd3)
+get the name with the tag of the image you want to update (eg- mltraining:latest)
+simply commit
+sudo docker commit 3636f4c40fd3 mltraining:latest
+done!
+
+
+
